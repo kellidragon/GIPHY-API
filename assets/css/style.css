@@ -1,0 +1,110 @@
+*{
+    font-family: 'Quicksand', sans-serif;
+}
+
+.jumbotronPic {
+   
+    border-bottom: solid 4px white;
+}
+
+body{   
+    background-image: url(../images/background3.jpeg);
+    background-size:cover;
+}
+
+.display-4{
+    font-size: 64px;
+    text-align: center;
+    text-shadow: 3px 3px 4px lightyellow;
+}
+
+.lead, .display-4{
+    color:white;
+}
+
+
+.jumbotron-fluid{
+    margin:50px;
+}
+
+#buttonsDiv{
+    margin-top: 30px;
+}
+
+#word-input{
+    margin-left: 20px;
+    text-align: center;
+}
+
+
+.natureButton, #add-nature {
+    margin-left: 20px;
+    text-align: center;
+    color: white;
+}
+
+#add-nature{
+    margin-left: 20px;
+}
+
+#buttonsDiv {
+    -webkit-appearance: none;
+    background-color: transparent;
+}
+
+.natureGif{
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin: 0 auto;
+}
+
+#view-gifs{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap:5px;
+    grid-auto-flow: column;
+    height: 700px;
+    overflow: hidden;
+}
+
+
+
+p {
+     text-align: center;
+     margin: 0 auto;
+     color: white;
+     background: #222222;
+ }
+
+ h5{
+    color: white;
+    background: #222222;
+ }
+
+
+ #addGiff-form{
+    margin: auto 20px;
+    display: block;
+    text-align: center;
+}
+
+.btn {
+    margin: 0 auto;
+    text-align: center;
+    display: block;
+}
+
+@media screen and (max-width: 480px){
+    body{
+        width: 100%;
+    }
+
+    #view-gifs{
+        width: 100%;
+        height: 100%;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(9, 1fr);
+    }
+  }

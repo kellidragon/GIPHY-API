@@ -1,74 +1,91 @@
 $(document).ready(function(){
 
-var nature = ['beach', 'cave', 'mountains', 'cliff', 'meadow', 'waterfall', 'river', 'ocean', 'island', 'forest', 'flowers']
+var nature = ['beach', 'mountains', 'cliff',  'waterfall', 'river', 'ocean', 'forest', 'flowers']
 
-//loops through nature array to add button for each index
-for(let i=0; i<nature.length; i++){
-   var buttons = $('<button>').addClass("natureButton").attr("data-nature", nature[i])
-    buttons.text(nature[i]);
-    $("#buttonsDiv").append(buttons);
-}
 
-//button on click 
 
-$(".natureButton").on("click", function(){
-    var natureClick = $(this).attr("data-nature")
+function renderButtons() {
+$("#buttonsDiv").empty();
+     //loops through nature array to add button for each index
+    for(let i=0; i<nature.length; i++){
+        var buttons = $('<button>').addClass("natureButton btn-block btn-outline-dark btn-light btn-lg").attr("data-name", nature[i])
+            buttons.text(nature[i]);
+            $("#buttonsDiv").append(buttons);
+    }
+
+};
+
+
+//event to handle when a user input button is added 
+$("#add-nature").on("click", function(event) {
+    event.preventDefault();
+  
+    // grab the text from the input box
+    var natureInput = $("#word-input").val().trim();
+    // input is then added to nature array
+    nature.push(natureInput);
+    renderButtons();
+  });
+ 
+  renderButtons();
+//event to handle when a nature button is clicked
+$("#buttonsDiv").on("click", ".natureButton" , function(){
+    var natureClick = $(this).attr("data-name")
     //creating a URL to search Giphy for the button pressed
     var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
     natureClick + "&api_key=JWhL2ed6vqoOJ8M4sih5sL0ABc5Espu3";
-console.log(natureClick)
-    //performing AJAX GET request
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-      }) .then(function(response) {
-        var results = response.data
-        console.log(results)
-        for (var i = 0; i < 10; i++) {
-              // Only taking action if the photo has a rating
-            // if (results[i].rating) {
-                // Creating a div for the gif
-                var gifDiv = $("<div>");
-  
-                // Storing the result item's rating
-                var rating = results[i].rating;
-         
-                // Creating a paragraph tag with the result item's rating
-                var p = $("<p>").text("Rating: " + rating);
-  
-                // Creating an image tag
-                var natureImage = $("<img>");
-  
-                // Giving the image tag an src attribute of a proprty pulled off the
-                // result item
-                var animatedGif = natureImage.attr("src", results[i].images.fixed_height.url);
-                var stillGif = natureImage.attr("src", results[i].images.fixed_height_still.url);
-       
-                // Appending the paragraph and natureImage we created to the "gifDiv" div 
-                gifDiv.append(p);
-                gifDiv.append(stillGif);
-  
-                // Prepending the gifDiv to the "#view-gifs" div in the HTML
-                $("#view-gifs").prepend(gifDiv);
-            }
-        
-$("img").on("click", function() {
+        console.log(natureClick)
+      
+//performing AJAX GET request
+$.ajax({
+    url: queryURL,
+    method: "GET"
+    }) .then(function(response) {
+        $("#view-gifs").empty();
+    var results = response.data
+    console.log(results)
+    for (var i = 0; i < 9; i++) {
+        var gifDiv = $("<div>");
+        var rating = results[i].rating;
+        var p = $("<p>").text("Rating: " + rating);
+        var natureImage = $("<img>").addClass("natureGif animated bounceInDown slow");
 
-   
-    for (var i = 0; i < 10; i++) {
-        if (stillGif) {
-            stillGif.attr("src", results[i].images.fixed_height.url);
+        // Giving the image tag an src attribute of a property pulled off the
+        // result item
         
-        } else if(animatedGif) {
-            animatedGif.attr("src", results[i].images.fixed_height_still.url);
-        
-        }
+        natureImage.attr("src", results[i].images.fixed_height_still.url);
+        natureImage.attr("data-still", results[i].images.fixed_height_still.url);
+        natureImage.attr("data-animate", results[i].images.fixed_height.url);
+        natureImage.attr("data-state", "still")
+
+        // Appending the paragraph and natureImage we created to the "gifDiv" div 
+        gifDiv.append(p);
+        gifDiv.append(natureImage);
+
+        // Prepending the gifDiv to the "#view-gifs" div in the HTML
+        $("#view-gifs").prepend(gifDiv);
+
     }
     });
-     
-      //TODO: make gif play after pause 
-      //capture form input and add function to make new button and adds to topic array 
-      //CSS 
+});
+
+
+//event to display still and animated gifs when clicked
+$("#view-gifs").on("click", ".natureGif" ,function() {
+
+        var state = $(this).attr("data-state")
+        console.log(state)
+
+        if (state === "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "animate");
+           
+        
+        } else {
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-state", "still");
+        
+    }
 
 
       //BONUS 
@@ -77,6 +94,5 @@ $("img").on("click", function() {
       });
 
     
-    });
-  
+
 });

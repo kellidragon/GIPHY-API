@@ -18,18 +18,20 @@ $("#buttonsDiv").empty();
 
 //event to handle when a user input button is added 
 $("#add-nature").on("click", function(event) {
+
     event.preventDefault();
-  
     // grab the text from the input box
     var natureInput = $("#word-input").val().trim();
     // input is then added to nature array
     nature.push(natureInput);
     renderButtons();
+   
   });
  
   renderButtons();
 //event to handle when a nature button is clicked
 $("#buttonsDiv").on("click", ".natureButton" , function(){
+   
     var natureClick = $(this).attr("data-name")
     //creating a URL to search Giphy for the button pressed
     var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
@@ -58,7 +60,7 @@ $.ajax({
         natureImage.attr("data-animate", results[i].images.fixed_height.url);
         natureImage.attr("data-state", "still")
 
-        // Appending the paragraph and natureImage we created to the "gifDiv" div 
+        // Appending the paragraph and natureImage to the "gifDiv" div 
         gifDiv.append(p);
         gifDiv.append(natureImage);
 
@@ -69,6 +71,12 @@ $.ajax({
     });
 });
 
+//event to load extra gifs
+$("#add-more").on("click", ".natureButton" , function(){
+
+
+
+})
 
 //event to display still and animated gifs when clicked
 $("#view-gifs").on("click", ".natureGif" ,function() {
@@ -86,11 +94,6 @@ $("#view-gifs").on("click", ".natureGif" ,function() {
             $(this).attr("data-state", "still");
         
     }
-
-
-      //BONUS 
-      //mobile responsive
-      //3. List additional metadata (title, tags, etc) for each gif in a clean and readable format.
       });
 
     

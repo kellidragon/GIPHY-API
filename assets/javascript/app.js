@@ -34,7 +34,7 @@ $("#buttonsDiv").on("click", ".natureButton" , function(){
    
     var natureClick = $(this).attr("data-name")
     //creating a URL to search Giphy for the button pressed
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
     natureClick + "&api_key=JWhL2ed6vqoOJ8M4sih5sL0ABc5Espu3";
         console.log(natureClick)
       
